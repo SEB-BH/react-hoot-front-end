@@ -15,10 +15,10 @@ Open your Terminal application and navigate to your `~/code/ga/lectures` directo
 cd ~/code/ga/lectures
 ```
 
-Clone the Express API - Hoot Back-End from the [solution code repo](https://git.generalassemb.ly/modular-curriculum-all-courses/express-api-hoot-back-end-solution):
+Clone the Express API - Hoot Back-End from the [solution code repo](https://github.com/SEB-BH/express-api-hoot-back-end):
 
 ```bash
-git clone https://git.generalassemb.ly/modular-curriculum-all-courses/express-api-hoot-back-end-solution.git express-api-hoot-back-end
+git clone https://github.com/SEB-BH/express-api-hoot-back-end.git express-api-hoot-back-end
 ```
 
 > 💡 By including the new folder name in the git clone command, you can immediately rename the directory during the cloning process, saving you from having to rename it manually later.
@@ -105,7 +105,7 @@ You should see a message that the Express app is ready and that you've connected
 
 ## Clone the auth template
 
-This lecture uses the [React JWT Auth Template](https://git.generalassemb.ly/modular-curriculum-all-courses/react-jwt-auth-template.git) as starter code. The template includes code to authenticate users in React using JWT tokens generated from an existing Express back-end API.
+This lecture uses the [React JWT Auth Template](https://github.com/SEB-14-Bahrain/react-jwt-auth-template) as starter code. The template includes code to authenticate users in React using JWT tokens generated from an existing Express back-end API.
 
 Return to your terminal window, and navigate to your `~/code/ga/lectures` directory:
 
@@ -116,7 +116,7 @@ cd ~/code/ga/lectures
 Clone the repository to your machine, and rename it `react-hoot-front-end`:
 
 ```bash
-git clone https://git.generalassemb.ly/modular-curriculum-all-courses/react-jwt-auth-template.git react-hoot-front-end
+git clone https://github.com/SEB-14-Bahrain/react-jwt-auth-template.git react-hoot-front-end
 ```
 
 > 💡 By including the new folder name in the git clone command, you can immediately rename the directory during the cloning process, saving you from having to rename it manually later.
