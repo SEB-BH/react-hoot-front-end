@@ -35,8 +35,7 @@ Let's get started!
 Run the following commands in your terminal:
 
 ```bash
-mkdir src/components/HootList
-touch src/components/HootList/HootList.jsx
+touch src/pages/HootList.jsx
 ```
 
 Let's add some basic JSX scaffolding to the component. We'll include the component name in our `return` to help us verify that our navigation is working correctly.
@@ -44,16 +43,16 @@ Let's add some basic JSX scaffolding to the component. We'll include the compone
 Add the following to the new `HootList` component:
 
 ```jsx
-// src/components/HootList/HootList.jsx
+// src/pages/HootList.jsx
 
 const HootList = (props) => {
-  return <main>Hoot List</main>;
-};
+  return <main>Hoot List</main>
+}
 
-export default HootList;
+export default HootList
 ```
 
-Head over to the `NavBar` component. We'll need to add a new link here that allows a signed-in user to navigate to the new `HootList` component.
+Head over to the `Nav` component. We'll need to add a new link here that allows a signed-in user to navigate to the new `HootList` component.
 
 1. Add a link to the new `HootList` component at `/hoots`.
 
@@ -64,25 +63,26 @@ Head over to the `NavBar` component. We'll need to add a new link here that allo
 Your links should look like the following:
 
 ```jsx
-// src/components/NavBar/NavBar.jsx
+// src/components/Nav.jsx
 
-  return (
-    <nav>
-      {user ? (
-        <ul>
-          <li><Link to='/'>HOME</Link></li>
-          <li><Link to='/hoots'>HOOTS</Link></li>
-          <li><Link to='/' onClick={handleSignOut}>Sign Out</Link></li>
-        </ul>
-      ) : (
-        <ul>
-          <li><Link to='/'>HOME</Link></li>
-          <li><Link to='/sign-in'>SIGN IN</Link></li>
-          <li><Link to='/sign-up'>SIGN UP</Link></li>
-        </ul>
-      )}
-    </nav>
-  );
+    return (
+        <nav>
+            <Link className="nav-brand" to="/">Hoot</Link>
+            { props.user ? (
+                <ul>
+                    <li>Welcome, {props.user.username}!</li>
+                    <li><Link to='/hoots'>HOOTS</Link></li>
+                    <li><Link to="/" onClick={handleSignOut}>Sign Out</Link></li>
+                </ul>
+            ) : (
+            <ul>
+                <li><Link to='/'>Home</Link></li>
+                <li><Link to='/sign-up'>Sign Up</Link></li>
+                <li><Link to='/sign-in'>Sign In</Link></li>
+            </ul>
+            ) }
+        </nav>
+    )
 ```
 
 We must add a new route to match this link in the `App` component before it will work.
@@ -94,7 +94,7 @@ First, navigate to `src/App.jsx` and import the `HootList` component alongside t
 ```jsx
 // src/App.jsx
 
-import HootList from './components/HootList/HootList';
+import HootList from './pages/HootList';
 ```
 
 With the component imported, we are ready to add the new route.
@@ -123,25 +123,25 @@ Update your routes in `src/App.jsx` with the following:
 // src/App.jsx
 
   return (
-    <>
-      <NavBar/>
+    <div>
+      <Nav user={user} setUser={setUser} />
+      <main className="app-main">
       <Routes>
-        <Route path='/' element={user ? <Dashboard /> : <Landing />} />
+        <Route path='/' element={user ? <Dashboard user={user} /> : <Landing />} />
         {user ? (
           <>
-            {/* Protected routes (available only to signed-in users) */}
             <Route path='/hoots' element={<HootList />} />
           </>
         ) : (
           <>
-            {/* Non-user routes (available only to guests) */}
-            <Route path='/sign-up' element={<SignUpForm />} />
-            <Route path='/sign-in' element={<SignInForm />} />
+            <Route path='/sign-up' element={<SignUpForm setUser={setUser} />} />
+            <Route path='/sign-in' element={<SignInForm setUser={setUser} />} />
           </>
         )}
       </Routes>
-    </>
-  );
+      </main>
+    </div>
+  )
 ```
 
 > 💡 In React, ternary operators allow you to conditionally display different components or groups of components based on a specific condition. In the code snippet above, we can use a ternary to both conditionally render a specific element for the same path (like on the `/` route) or gate groups of routes to specific user roles.
@@ -168,13 +168,13 @@ To display the list of hoots, we need to fetch the data from our back-end. Here'
 Run the following command in your terminal:
 
 ```bash
-touch src/services/hootService.js
+touch src/services/hoots.js
 ```
 
-And add the following to the top of `src/services/hootService.js`:
+And add the following to the top of `src/services/hoots.js`:
 
 ```javascript
-const BASE_URL = `${import.meta.env.VITE_BACK_END_SERVER_URL}/hoots`;
+const BASE_URL = `${import.meta.env.VITE_BACK_END_SERVER_URL}/hoots`
 ```
 
 > 💡 If you completed the setup steps, your `.env` should contain a `VITE_BACK_END_SERVER_URL` environment variable set to `http://localhost:3000`. When running our app locally, the `BASE_URL` will read as `http://localhost:3000/hoots`.
@@ -183,25 +183,25 @@ const BASE_URL = `${import.meta.env.VITE_BACK_END_SERVER_URL}/hoots`;
 
 Next, we'll need to build out the `index()` functionality. We'll make a request to `/hoots`, so in this instance, no modification to the `BASE_URL` is necessary.
 
-Add the following to `src/services/hootService.js`:
+Add the following to `src/services/hoots.js`:
 
 ```javascript
-// src/services/hootService.js
+// src/services/hoots.js
 
 const index = async () => {
   try {
     const res = await fetch(BASE_URL, {
       headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-    });
-    return res.json();
+    })
+    return res.json()
   } catch (error) {
-    console.log(error);
+    console.log(error)
   }
-};
+}
 
 export { 
   index,
-};
+}
 ```
 
 > 🚨 Don't forget to `export` each service function after adding them. Otherwise, they will not be accessible in the component where they are called upon.
@@ -210,10 +210,10 @@ Notice the inclusion of the `headers` property. The `headers` property is an obj
 
 This token is decoded by the `verifyToken` middleware function on our server, which allows us to identify the signed-in user and ensures that only signed-in users can access this functionality.
 
-If you look at the `controllers/hoots.js` file in your back-end application, you'll notice that all of our routes for hoots are **protected** by the `verifyToken` middleware.
+If you look at the `server.js` file in your back-end application, you'll notice that all of our routes for hoots are **protected** by the `verifyToken` middleware.
 
 ```javascript
-router.get('/', verifyToken, async (req, res) => {...}
+app.get('/hoots', verifyToken, hootCtrl.index)
 ```
 
 As a result, all of our hoot service functions will require this `Authorization` header.
@@ -225,17 +225,17 @@ Back in `src/App.jsx`, add an import for our new `hootService` module:
 ```jsx
 // src/App.jsx
 
-import * as hootService from './services/hootService';
+import * as hootService from './services/hoots'
 ```
 
 > 💡 The syntax above is a great way to import everything (`*`) from the module. Within `src/App.jsx`, individual functions can be called upon with *dot notation* through the `hootService` object.
 
-While we are here, let's import the `useEffect()` and `useState()` hooks as well:
+While we are here, let's import the `useEffect()` hook as well:
 
 ```jsx
 // src/App.jsx
 
-import { useContext, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react'
 ```
 
 Before we retrieve a list of hoots from our back-end, we'll need a state variable to store them in.
@@ -256,20 +256,19 @@ Add the following:
 // src/App.jsx
 
 const App = () => {
-  const { user } = useContext(UserContext);
 
   useEffect(() => {
     const fetchAllHoots = async () => {
-      const hootsData = await hootService.index();
+      const hootsData = await hootService.index()
   
       // console log to verify
-      console.log('hootsData:', hootsData);
-    };
-    if (user) fetchAllHoots();
-  }, [user]);
-  
+      console.log('hootsData:', hootsData)
+    }
+    if (user) fetchAllHoots()
+  }, [user])
+
   // return statement code here
-};
+}
 ```
 
 Notice the inclusion of `user` in our dependency array and the `if` condition placed around the invocation of `fetchAllHoots()`.
@@ -285,13 +284,13 @@ Notice the inclusion of `user` in our dependency array and the `if` condition pl
 
      useEffect(() => {
        const fetchAllHoots = async () => {
-         const hootsData = await hootService.index();
+         const hootsData = await hootService.index()
 
          // update to set state:
-         setHoots(hootsData);
-       };
-       if (user) fetchAllHoots();
-     }, [user]);
+         setHoots(hootsData)
+       }
+       if (user) fetchAllHoots()
+     }, [user])
    ```
 
 We now have `hoots` state to pass down to the `HootList` component:
@@ -302,7 +301,7 @@ We now have `hoots` state to pass down to the `HootList` component:
 <Route path='/hoots' element={<HootList hoots={hoots} />} />
 ```
 
-Within `src/components/HootList.jsx`, verify that `hoots` is accessible through `props`.
+Within `src/components.jsx`, verify that `hoots` is accessible through `props`.
 
 > 🏆 After passing props, verify that the data you've passed down to the child component exists with your React Dev Tools or a `console.log()`. Doing so will ensure you have data to render.
 
@@ -310,10 +309,10 @@ Within `src/components/HootList.jsx`, verify that `hoots` is accessible through 
 
 The next step is to `map()` over `props.hoots`. At this stage, we'll use the `Array.prototype.map()` method to produce an array of `<p>` tags before replacing these with a proper 'card' UI element.
 
-Add the following to `src/components/HootList/HootList.jsx`:
+Add the following to `src/pages/HootList.jsx`:
 
 ```jsx
-// src/components/HootList/HootList.jsx
+// src/pages/HootList.jsx
 
 const HootList = (props) => {
   return (
@@ -322,8 +321,8 @@ const HootList = (props) => {
         <p key={hoot._id}>{hoot.title}</p>
       ))}
     </main>
-  );
-};
+  )
+}
 ```
 
 Check your browser and click on the **Hoots** link. If you have existing hoots in your database, you should see a list of titles when you navigate to `/hoots`.
@@ -335,7 +334,7 @@ Let's display some more useful information. We'll replace the existing `<p>` tag
 Add the following import to the `HootList` component:
 
 ```jsx
-// src/components/HootList/HootList.jsx
+// src/pages/HootList.jsx
 
 import { Link } from 'react-router';
 ```
@@ -343,26 +342,38 @@ import { Link } from 'react-router';
 And update the `return` with the following:
 
 ```jsx
-// src/components/HootList/HootList.jsx
+// src/pages/HootList.jsx
 
+import { Link } from "react-router"
+
+const HootList = (props) => {
   return (
-    <main>
+    <main className="hoot-list">
       {props.hoots.map((hoot) => (
         <Link key={hoot._id} to={`/hoots/${hoot._id}`}>
-          <article>
-            <header>
-              <h2>{hoot.title}</h2>
-              <p>
-                {`${hoot.author.username} posted on
-                ${new Date(hoot.createdAt).toLocaleDateString()}`}
-              </p>
-            </header>
-            <p>{hoot.text}</p>
-          </article>
+            <article className="card">
+                <header>
+                    <span className="hoot-category">{hoot.category}</span>
+                    <h2 key={hoot._id}>{hoot.title}</h2>
+                    <p className="hoot-author">Posted by {hoot.author?.username || 'Unknown user'}</p>
+                </header>
+                <p className="hoot-text">{hoot.text}</p>
+                <footer className="hoot-footer">
+                <span>
+                    {new Date(hoot.createdAt).toLocaleDateString()}
+                </span>
+                <span>
+                    {hoot.comments?.length || 0} comments
+                </span>
+                </footer>
+            </article>
         </Link>
       ))}
     </main>
-  );
+  )
+}
+
+export default HootList
 ```
 
 Notice how we are wrapping the `<article>` with a `Link` component. The `to` property specifies the URL a user should be directed to when they click the link. Think of the value assigned to the `to` property as an argument passed into a function. Once we add params (`:hootId`) on a corresponding client-side route, the `Link` component will direct a user to a details page for a specific hoot whenever they click on a card.
@@ -374,3 +385,57 @@ http://localhost:5173/hoots/760c468afc392b1ea00e9fa7
 ```
 
 In the next step, we'll build the interface to be displayed at this URL.
+
+Finally, add this css to `App.css`
+
+```css
+.hoot-card {
+  max-width: 700px;
+}
+
+.hoot-header {
+  text-align: left;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 16px;
+}
+
+.hoot-header h2 {
+  margin-bottom: 8px;
+}
+
+.hoot-category {
+  display: inline-block;
+  margin-bottom: 12px;
+  padding: 4px 10px;
+  background-color: var(--color-primary-soft);
+  color: var(--color-primary-dark);
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.hoot-author {
+  margin-bottom: 0;
+  color: var(--color-text-light);
+  font-size: 0.9rem;
+}
+
+.hoot-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-border);
+  color: var(--color-text-light);
+  font-size: 0.85rem;
+}
+
+.hoot-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+}
+```
