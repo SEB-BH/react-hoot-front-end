@@ -38,44 +38,5 @@ Students will also learn to apply CSS Modules for styling and building reusable 
 
 📖 [Reference Materials](./references/README.md)
 
-## Internal
-
-### Prerequisites
-
-- React State Management
-- Controlled Forms in React
-- Lifting State in React Components
-- Fetching Data in React
-- React Router DOM
-- JWT Authentication in React
-
-### Starter code
-
-This module requires an existing Express API with JWT Authentication set up.
-
-🟢 [Express API starter code](https://git.generalassemb.ly/modular-curriculum-all-courses/express-api-hoot-back-end-solution)
-
-This module also uses an existing template equip with forms for JWT authentication in a React application.
-
-🟢 [React JWT Auth Template](https://git.generalassemb.ly/modular-curriculum-all-courses/react-jwt-auth-template)
-
-### Solution code
-
-🏁 [Solution code](https://git.generalassemb.ly/modular-curriculum-all-courses/react-hoot-front-end-solution)
-
-### Course landing pages
-
-- [SEB - Software Engineering Bootcamp](https://ga-curriculum.github.io/react-hoot-front-end/canvas-landing-pages/seb.html)
-- [Fallback](https://ga-curriculum.github.io/react-hoot-front-end/canvas-landing-pages/fallback.html)
-
-### Resources
-
-✏️ [Instructor Guide](./internal-resources/instructor-guide.md)
-
-🎥 [Video Hub](./internal-resources/video-hub.md)
-
-🏗️ [Release Notes](./internal-resources/release-notes.md)
-
----
 
 **Find a 👾 bug 👾 or have suggestions? [Let us know](https://ga-curriculum.github.io/universal-resources-internal/module-feedback.html)!**
