@@ -200,6 +200,8 @@ Add the following directly above your existing `return`:
   if (!hoot) return <main>Loading...</main>
 ```
 
+Consider making a spinner with [this generator](https://www.w3schools.com/tools/tool_css_loader.php). Replace `Loading...` with this html element: `<div class="loader"></div>` and add the gnerated `css` to `App.css`.
+
 With our condition in place, let's build out the remaining JSX:
 
 ```jsx
