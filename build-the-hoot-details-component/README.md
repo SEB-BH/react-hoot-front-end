@@ -22,20 +22,19 @@ Our `HootDetails` component will hold `hoot` state locally. This differs from th
 Let's build out the scaffolding for our new component. Run the following commands in your terminal:
 
 ```bash
-mkdir src/components/HootDetails
-touch src/components/HootDetails/HootDetails.jsx
+touch src/pages/HootDetails.jsx
 ```
 
 Add the following to the new `HootDetails` component:
 
 ```jsx
-// src/components/HootDetails/HootDetails.jsx
+// src/pages/HootDetails.jsx
 
 const HootDetails = () => {
-  return <main>Hoot Details</main>;
-};
+  return <main>Hoot Details</main>
+}
 
-export default HootDetails;
+export default HootDetails
 ```
 
 Next, import the `HootDetails` component in the `App` component:
@@ -43,7 +42,7 @@ Next, import the `HootDetails` component in the `App` component:
 ```jsx
 // src/App.jsx
 
-import HootDetails from './components/HootDetails/HootDetails';
+import HootDetails from './pages/HootDetails';
 ```
 
 Then create the new indicated **protected** route below:
@@ -51,21 +50,16 @@ Then create the new indicated **protected** route below:
 ```jsx
 // src/App.jsx
 
-        {user ? (
+      {user ? (
           <>
-            {/* Protected Routes (available only to signed-in users) */}
-            <Route path='/hoots' element={<HootList hoots={hoots}/>} />
-            {/* Add this route! */}
-            <Route 
-              path='/hoots/:hootId'
-              element={<HootDetails />}
-            />
+            <Route path='/hoots' element={<HootList hoots={hoots} />} />
+            {/* new protected hoot details route */}
+            <Route path='/hoots/:hootId' element={<HootDetails />} />
           </>
         ) : (
           <>
-            {/* Non-user Routes (available only to guests) */}
-            <Route path='/sign-up' element={<SignUpForm />} />
-            <Route path='/sign-in' element={<SignInForm />} />
+            <Route path='/sign-up' element={<SignUpForm setUser={setUser} />} />
+            <Route path='/sign-in' element={<SignInForm setUser={setUser} />} />
           </>
         )}
 ```
@@ -91,7 +85,7 @@ To extract this value for use in our component, we'll use the `useParams()` hook
 Add the following import to the `HootDetails` component:
 
 ```jsx
-// src/components/HootDetails/HootDetails.jsx
+// src/pages/HootDetails.jsx
 
 import { useParams } from 'react-router';
 ```
@@ -99,14 +93,18 @@ import { useParams } from 'react-router';
 Next, let's call `useParams()` to get access to the `hootId`:
 
 ```jsx
-// src/components/HootDetails/HootDetails.jsx
+// src/pages/HootDetails.jsx
+
+import { useParams } from "react-router"
 
 const HootDetails = () => {
-  const { hootId } = useParams();
-  console.log('hootId', hootId);
+    const { hootId } = useParams()
+    console.log('hootId: ', hootId)
 
-  return <main>Hoot Details</main>;
-};
+    return <main>Hoot Details</main>
+}
+
+export default HootDetails
 ```
 
 > 💡 Be sure to [destructure](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment) the `hootId` when calling `useParams()`!
@@ -122,24 +120,24 @@ Once again, our service function will require an Authorization header.
 Add the following to `src/services/hootService.js`:
 
 ```js
-// src/services/hootService.js
+// src/services/hoots.js
 
 const show = async (hootId) => {
   try {
     const res = await fetch(`${BASE_URL}/${hootId}`, {
       headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-    });
-    return res.json();
+    })
+    return res.json()
   } catch (error) {
-    console.log(error);
+    console.log(error)
   }
-};
+}
 
 export {
   index,
   // Don't forget to export:
   show,
-};
+}
 ```
 
 > ❓ Let's take a moment to connect the dots of our application. Notice the `hootId` in the above service function. Where will this information be used in the back-end app?
@@ -151,18 +149,19 @@ Next up, we'll call the service, and store the response from the server in state
 We'll need to add a few imports to the `HootDetails` component to proceed:
 
 ```jsx
-// src/components/HootDetails/HootDetails.jsx
+// src/pages/HootDetails.jsx
 
-import { useState, useEffect } from 'react';
-import * as hootService from '../../services/hootService';
+import { useParams } from "react-router"
+import * as hootService from '../services/hoots'
 ```
 
 Create a new `useState()` variable called `hoot` with an initial value of `null`:
 
 ```jsx
-// src/components/HootDetails/HootDetails.jsx
+// src/pages/HootDetails.jsx
+import { useState } from "react"
 
-const [hoot, setHoot] = useState(null);
+const [hoot, setHoot] = useState(null)
 ```
 
 > 💡 Giving the `hoot` state an initial value of `null` will simplify some conditional rendering that we will implement shortly.
@@ -170,18 +169,19 @@ const [hoot, setHoot] = useState(null);
 And add the following `useEffect()`:
 
 ```jsx
-// src/components/HootDetails/HootDetails.jsx
+// src/pages/HootDetails.jsx
+import { useState, useEffect } from "react"
 
-  useEffect(() => {
+useEffect(() => {
     const fetchHoot = async () => {
-      const hootData = await hootService.show(hootId);
-      setHoot(hootData);
-    };
-    fetchHoot();
-  }, [hootId]);
+        const hootData = await hootService.show(hootId)
+        setHoot(hootData)
+    }
+    fetchHoot()
+}, [hootId])
 
   // Verify the hoot state is set correctly:
-  console.log('hoot state:', hoot);
+  console.log('hoot state:', hoot)
 ```
 
 > 💡 Remember to include `hootId` in the [dependency array](https://react.dev/reference/react/useEffect#specifying-reactive-dependencies) of your `useEffect()`. This tells the `useEffect()` to fire off whenever the value of the `hootId` changes.
@@ -195,34 +195,29 @@ If you included the `console.log()` in the step above, you might notice that the
 Add the following directly above your existing `return`:
 
 ```jsx
-// src/components/HootDetails/HootDetails.jsx
+// src/pages/HootDetails.jsx
 
-  if (!hoot) return <main>Loading...</main>;
+  if (!hoot) return <main>Loading...</main>
 ```
 
 With our condition in place, let's build out the remaining JSX:
 
 ```jsx
-// src/components/HootDetails/HootDetails.jsx
+// src/pages/HootDetails.jsx
 
-  return (
-    <main>
-      <section>
-        <header>
-          <p>{hoot.category.toUpperCase()}</p>
-          <h1>{hoot.title}</h1>
-          <p>
-            {`${hoot.author.username} posted on
-            ${new Date(hoot.createdAt).toLocaleDateString()}`}
-          </p>
-        </header>
-        <p>{hoot.text}</p>
-      </section>
-      <section>
-        <h2>Comments</h2>
-      </section>
-    </main>
-  );
+    return (
+        <article className="card hoot-card">
+            <header className="hoot-header">
+                <span className="hoot-category">{hoot.category}</span>
+                <h2>{hoot.title}</h2>
+                <p className="hoot-author">Posted by {hoot.author?.username || 'Unknown user'} on <span>{new Date(hoot.createdAt).toLocaleDateString()}</span></p>
+            </header>
+            <p className="hoot-text">{hoot.text}</p>
+            <footer className="hoot-footer">
+              {/* comments go here */}
+            </footer>
+        </article>
+    )
 ```
 
 Notice the `<section>` tag at the bottom. This will act as our 'Comments' section. The `commentSchema` is embedded within `hootSchema`, so the relevant `comment` data should already exist within this component's `hoot` state.
@@ -250,10 +245,10 @@ const hoot = await Hoot.findById(req.params.hootId).populate([
 
 In our comments section, we'll also want to include a condition that displays a message if there are not yet any `comments` embedded within the `hoot`.
 
-Update `src/components/HootDetails/HootDetails.jsx` with the following:
+Update `src/pages/HootDetails.jsx` with the following:
 
 ```jsx
-// src/components/HootDetails/HootDetails.jsx
+// src/pages/HootDetails.jsx
 
       {/* All updates are in the comments section! */}
       <section>
@@ -264,10 +259,7 @@ Update `src/components/HootDetails/HootDetails.jsx` with the following:
         {hoot.comments.map((comment) => (
           <article key={comment._id}>
             <header>
-              <p>
-                {`${comment.author.username} posted on
-                ${new Date(comment.createdAt).toLocaleDateString()}`}
-              </p>
+              <p>{`${comment.author.username} posted on ${new Date(comment.createdAt).toLocaleDateString()}`}</p>
             </header>
             <p>{comment.text}</p>
           </article>
