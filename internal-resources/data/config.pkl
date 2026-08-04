@@ -1,0 +1,89 @@
+amends "https://pages.git.generalassemb.ly/modular-curriculum-all-courses/universal-resources-internal/static/v2/pkl/template.pkl"
+
+import "microlessons.pkl" as mls
+
+// See template.pkl for full configuration options available here.
+
+// After modifying this file, use this command while in the root directory
+// for this project to create the final configuration file (config.json):
+// pkl eval -f json ./internal-resources/data/config.pkl -o %{moduleDir}/%{moduleName}.%{outputFormat}
+
+repo {
+  // This name is shown in the header nav to navigate users home
+  friendlyName = "React - Hoot Front-End"
+  // This must match the repo name as it appears on GitHub exactly
+  name = "react-hoot-front-end"
+  type = "Lesson"
+}
+
+courses {
+  new {
+    name = "fallback"
+    microlessons {
+      // add microlessons here, in the order they should be delivered
+      mls.setup
+      mls.settingTheStage
+      mls.buildTheHootListComponent
+      mls.buildTheHootDetailsComponent
+      mls.createAHoot
+      mls.createAComment
+      mls.deleteAHoot
+      mls.updateAHoot
+      mls.updateAndDeleteComments
+      mls.addCssModules
+      mls.styleTheHootListComponent
+      mls.styleTheHootDetailsComponent
+      mls.styleTheFormComponents
+      mls.styleTheSignUpAndSignInPages
+      mls.buildALoadingScreen
+      mls.buildALandingPage
+      mls.buildAReusableIconComponent
+      mls.buildAReusableMetadataComponent
+    }
+  }
+  new {
+    name = "seb"
+    microlessons {
+      // add microlessons here, in the order they should be delivered
+      mls.setup
+      mls.settingTheStage
+      mls.buildTheHootListComponent
+      mls.buildTheHootDetailsComponent
+      mls.createAHoot
+      mls.createAComment
+      mls.deleteAHoot
+      mls.updateAHoot
+      (mls.updateAndDeleteComments) {
+        type = "Level Up content"
+      }
+      (mls.addCssModules) {
+        type = "Level Up content"
+      }
+      (mls.styleTheHootListComponent) {
+        type = "Level Up content"
+      }
+      (mls.styleTheHootDetailsComponent) {
+        type = "Level Up content"
+      }
+      (mls.styleTheFormComponents) {
+        type = "Level Up content"
+      }
+      (mls.styleTheSignUpAndSignInPages) {
+        type = "Level Up content"
+      }
+      (mls.buildALoadingScreen) {
+        type = "Level Up content"
+      }
+      (mls.buildALandingPage) {
+        type = "Level Up content"
+      }
+      (mls.buildAReusableIconComponent) {
+        type = "Level Up content"
+      }
+      (mls.buildAReusableMetadataComponent) {
+        type = "Level Up content"
+      }
+    }
+  }
+}
+

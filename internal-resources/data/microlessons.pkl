@@ -1,0 +1,130 @@
+import "https://pages.git.generalassemb.ly/modular-curriculum-all-courses/universal-resources-internal/static/v2/pkl/template.pkl" as Template
+
+// Add microlessons here, in the order they should be delivered
+
+setup = new Template.Microlesson {
+  friendlyName = "Setup"
+  dirName = "setup"
+  type = "Content"
+  videoUrl = ""
+}
+
+settingTheStage = new Template.Microlesson {
+  friendlyName = "Setting the Stage"
+  dirName = "setting-the-stage"
+  type = "Content"
+  videoUrl = ""
+}
+
+buildTheHootListComponent = new Template.Microlesson {
+  friendlyName = "Build the Hoot List Component"
+  dirName = "build-the-hoot-list-component"
+  type = "Content"
+  videoUrl = ""
+}
+
+buildTheHootDetailsComponent = new Template.Microlesson {
+  friendlyName = "Build the Hoot Details Component"
+  dirName = "build-the-hoot-details-component"
+  type = "Content"
+  videoUrl = ""
+}
+
+createAHoot = new Template.Microlesson {
+  friendlyName = "Create a Hoot"
+  dirName = "create-a-hoot"
+  type = "Content"
+  videoUrl = ""
+}
+
+createAComment = new Template.Microlesson {
+  friendlyName = "Create a Comment"
+  dirName = "create-a-comment"
+  type = "Content"
+  videoUrl = ""
+}
+
+deleteAHoot = new Template.Microlesson {
+  friendlyName = "Delete a Hoot"
+  dirName = "delete-a-hoot"
+  type = "Content"
+  videoUrl = ""
+}
+
+updateAHoot = new Template.Microlesson {
+  friendlyName = "Update a Hoot"
+  dirName = "update-a-hoot"
+  type = "Content"
+  videoUrl = ""
+}
+
+updateAndDeleteComments = new Template.Microlesson {
+  friendlyName = "Update and Delete Comments"
+  dirName = "update-and-delete-comments"
+  type = "Content"
+  videoUrl = ""
+}
+
+addCssModules = new Template.Microlesson {
+  friendlyName = "Add CSS Modules"
+  dirName = "add-css-modules"
+  type = "Content"
+  videoUrl = ""
+}
+
+styleTheHootListComponent = new Template.Microlesson {
+  friendlyName = "Style the Hoot List Component"
+  dirName = "style-the-hoot-list-component"
+  type = "Content"
+  videoUrl = ""
+}
+
+styleTheHootDetailsComponent = new Template.Microlesson {
+  friendlyName = "Style the Hoot Details Component"
+  dirName = "style-the-hoot-details-component"
+  type = "Content"
+  videoUrl = ""
+}
+
+styleTheFormComponents = new Template.Microlesson {
+  friendlyName = "Style the Form Components"
+  dirName = "style-the-form-components"
+  type = "Content"
+  videoUrl = ""
+}
+
+styleTheSignUpAndSignInPages = new Template.Microlesson {
+  friendlyName = "Style the Sign-Up and Sign-In Pages"
+  dirName = "style-the-sign-up-and-sign-in-pages"
+  type = "Content"
+  videoUrl = ""
+}
+
+buildALoadingScreen = new Template.Microlesson {
+  friendlyName = "Build a Loading Screen"
+  dirName = "build-a-loading-screen"
+  type = "Content"
+  videoUrl = ""
+}
+
+buildALandingPage = new Template.Microlesson {
+  friendlyName = "Build a Landing Page"
+  dirName = "build-a-landing-page"
+  type = "Content"
+  videoUrl = ""
+}
+
+buildAReusableIconComponent = new Template.Microlesson {
+  friendlyName = "Build a Reusable Icon Component"
+  dirName = "build-a-reusable-icon-component"
+  type = "Content"
+  videoUrl = ""
+}
+
+buildAReusableMetadataComponent = new Template.Microlesson {
+  friendlyName = "Build a Reusable Metadata Component"
+  dirName = "build-a-reusable-metadata-component"
+  type = "Content"
+  videoUrl = ""
+}
+
