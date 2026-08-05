@@ -353,7 +353,7 @@ const HootList = (props) => {
         <Link key={hoot._id} to={`/hoots/${hoot._id}`}>
             <article className="card">
                 <header>
-                    <span className="hoot-category">{hoot.category}</span>
+                    <span className="hoot-category">{hoot.category.toUpperCase()}</span>
                     <h2 key={hoot._id}>{hoot.title}</h2>
                     <p className="hoot-author">Posted by {hoot.author?.username || 'Unknown user'}</p>
                 </header>

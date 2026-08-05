@@ -47,14 +47,13 @@ Because the `user` state is defined in `App.jsx`, we need to pass it to the `Hoo
 2. Update the `HootDetails` component to accept `props`:
 
    ```jsx
-   // src/pages/HootDetails/HootDetails.jsx
+   // src/pages/HootDetails.jsx
 
-   import { useState, useEffect } from 'react'
-   import { useParams } from 'react-router'
-
-   import CommentForm from '../CommentForm/CommentForm'
-
-   import * as hootService from '../../services/hootService'
+  import { useParams } from "react-router"
+  import * as hootService from '../services/hoots'
+  import { useState, useEffect } from "react"
+  import CommentForm from "../components/CommentForm"
+  import * as commentsService from '../services/comments'
 
    const HootDetails = (props) => {
      const { hootId } = useParams()
@@ -65,8 +64,6 @@ Because the `user` state is defined in `App.jsx`, we need to pass it to the `Hoo
 
    export default HootDetails
    ```
-
-   We do not need to import `UserContext` or `useContext`. The user is available as `props.user`.
 
 ## Conditionally render the author controls
 
@@ -96,20 +93,16 @@ This means only the author of a particular hoot will see the controls used to up
    ```jsx
    // src/pages/HootDetails.jsx
 
-             <header>
-               <p>{hoot.category.toUpperCase()}</p>
-               <h1>{hoot.title}</h1>
-               <p>
-                 {`${hoot.author.username} posted on
-                 ${new Date(hoot.createdAt).toLocaleDateString()}`}
-               </p>
-               {/* Add the following */}
-               {hoot.author._id === user._id && (
+            <header className="hoot-header">
+                <span className="hoot-category">{hoot.category.toUpperCase()}</span>
+                <h2>{hoot.title}</h2>
+                <p className="hoot-author">Posted by {hoot.author?.username || 'Unknown user'} on <span>{new Date(hoot.createdAt).toLocaleDateString()}</span></p>
+                {hoot.author._id === props.user._id && (
                  <>
                    <button>Delete</button>
                  </>
                )}
-             </header>
+            </header>
    ```
 
    > 💡 Notice the use of a React fragment (`<> </>`) here. While we don't need a fragment now, we'll add another element alongside the delete button soon.
@@ -121,34 +114,20 @@ This means only the author of a particular hoot will see the controls used to up
    ```jsx
    // src/App.jsx
 
-   const handleDeleteHoot = async (hootId) => {
-     console.log('hootId', hootId);
-   };
+  const handleDeleteHoot = async (hootId) => {
+    console.log('hootId: ', hootId)
+  }
    ```
 
 2. Next, pass the function down to `HootDetails`:
 
-   ```jsx
-   // src/App.jsx
+```jsx
+// src/App.jsx
 
-               <Route 
-                 path='/hoots/:hootId'
-                 element={<HootDetails handleDeleteHoot={handleDeleteHoot}/>}
-               />
-   ```
+<Route path='/hoots/:hootId' element={<HootDetails user={user} handleDeleteHoot={handleDeleteHoot} />} />
+```
 
-3. The `HootDetails` component will need to receive the `handleDeleteHoot()` function as a prop. It currently doesn't have any props, so let's add the `props` parameter to the component function:
-
-   ```jsx
-   // src/pages/HootDetails.jsx
-
-   // The HootDetails component function needs to receive props
-   const HootDetails = (props) => {
-     // HootDetails function code here
-   };
-   ```
-
-4. In the `HootDetails` component, let's update the delete button we added earlier. We'll attach an `onClick` event handler that triggers the `props.handleDeleteHoot(hootId)` function when the button is clicked.
+3. In the `HootDetails` component, let's update the delete button we added earlier. We'll attach an `onClick` event handler that triggers the `props.handleDeleteHoot(hootId)` function when the button is clicked.
 
    Update your button with the following:
 
@@ -156,29 +135,26 @@ This means only the author of a particular hoot will see the controls used to up
    // src/pages/HootDetails.jsx
 
            {hoot.author._id === user._id && (
-             <>
                {/* Modify the button */}
-               <button onClick={() => props.handleDeleteHoot(hootId)}>
-                 Delete
-               </button>
-             </>
+                 <>
+                   <button onClick={() => props.handleDeleteHoot(hootId)}>Delete</button>
+                 </>
            )}
    ```
 
    > 🚨 Be sure to pass in `hootId` as an argument when you call the function. We won't know which hoot to delete without it.
 
-5. In your browser, try deleting a hoot. You should see a `console.log()` originating from `App.jsx` confirming that the `hootId` is being passed up the component tree.
+4. In your browser, try deleting a hoot. You should see a `console.log()` originating from `App.jsx` confirming that the `hootId` is being passed up the component tree.
 
-6. With the `hootId` accessible in `handleDeleteHoot()`, let's confirm that we can `filter()` state using this value:
+5. With the `hootId` accessible in `handleDeleteHoot()`, let's confirm that we can `filter()` state using this value:
 
    ```jsx
    // src/App.jsx
 
-   const handleDeleteHoot = async (hootId) => {
-     console.log('hootId', hootId);
-     setHoots(hoots.filter((hoot) => hoot._id !== hootId));
-     navigate('/hoots');
-   };
+  const handleDeleteHoot = async (hootId) => {
+    setHoots(hoots.filter((hoot) => hoot._id !== hootId))
+    navigate('/hoots')
+  }
    ```
 
    > Remember, the [array's filter()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter) method returns a shallow copy of the array, excluding all elements that do not pass the test implemented by the provided callback function.
@@ -196,7 +172,7 @@ Managing local state is useful for providing immediate visual updates. However, 
 Let's finish up our delete functionality by adding the `deleteHoot()` service function to the hoot service:
 
 ```javascript
-// src/services/hootService.js
+// src/services/hoots.js
 
 const deleteHoot = async (hootId) => {
   try {
@@ -216,7 +192,6 @@ export {
   index,
   show,
   create,
-  createComment,
   // Add export:
   deleteHoot,
 };
@@ -248,11 +223,10 @@ Back in `src/App.jsx`, update `handleDeleteHoot()` with the following:
 // src/App.jsx
 
   const handleDeleteHoot = async (hootId) => {
-    const deletedHoot = await hootService.deleteHoot(hootId);
-    // Filter state using deletedHoot._id:
-    setHoots(hoots.filter((hoot) => hoot._id !== deletedHoot._id));
-    navigate('/hoots');
-  };
+    const deletedHoot = await hootService.deleteHoot(hootId)
+    setHoots(hoots.filter((hoot) => hoot._id !== hootId))
+    navigate('/hoots')
+  }
 ```
 
 Try it out! You should now be able to delete hoots.

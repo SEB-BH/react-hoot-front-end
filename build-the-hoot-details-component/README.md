@@ -210,7 +210,7 @@ With our condition in place, let's build out the remaining JSX:
     return (
         <article className="card hoot-card">
             <header className="hoot-header">
-                <span className="hoot-category">{hoot.category}</span>
+                <span className="hoot-category">{hoot.category.toUpperCase()}</span>
                 <h2>{hoot.title}</h2>
                 <p className="hoot-author">Posted by {hoot.author?.username || 'Unknown user'} on <span>{new Date(hoot.createdAt).toLocaleDateString()}</span></p>
             </header>
