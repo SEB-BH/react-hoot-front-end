@@ -27,47 +27,48 @@ Let's build out the scaffolding for our component.
 
    ```bash
    mkdir src/components/CommentForm
-   touch src/components/CommentForm/CommentForm.jsx
+   touch src/components/CommentForm.jsx
    ```
 
 2. Add the following to the new `CommentForm` component you just created:
 
    ```jsx
-   // src/components/CommentForm/CommentForm.jsx
+   // src/components/CommentForm.jsx
+  import { useState } from 'react'
 
-   import { useState } from 'react';
+  const CommentForm = (props) => {
+    const initialState = {
+      text: ''
+    }
+    const [formData, setFormData] = useState(initialState)
 
-   const CommentForm = (props) => {
-     const [formData, setFormData] = useState({ text: '' });
+    const handleChange = (evt) => {
+      setFormData({ ...formData, [evt.target.name]: evt.target.value })
+    }
 
-     const handleChange = (evt) => {
-       setFormData({ ...formData, [evt.target.name]: evt.target.value });
-     };
+    const handleSubmit = (evt) => {
+      evt.preventDefault()
+      // add handleAddComment
+      setFormData(initialState)
+    }
 
-     const handleSubmit = (evt) => {
-       evt.preventDefault();
-       // add handleAddComment
-       setFormData({ text: '' });
-     };
+    return (
+      <form onSubmit={handleSubmit}>
+        <label htmlFor='text-input'>Your comment:</label>
+        <textarea
+          required
+          type='text'
+          name='text'
+          id='text-input'
+          value={formData.text}
+          onChange={handleChange}
+        />
+        <button type='submit'>SUBMIT COMMENT</button>
+      </form>
+    )
+  }
 
-     return (
-       <form onSubmit={handleSubmit}>
-         <label htmlFor='text-input'>Your comment:</label>
-         <textarea
-           required
-           type='text'
-           name='text'
-           id='text-input'
-           value={formData.text}
-           onChange={handleChange}
-         />
-         <button type='submit'>SUBMIT COMMENT</button>
-       </form>
-     );
-   };
-
-   export default CommentForm;
-
+  export default CommentForm
    ```
 
    > 💡 Notice how we reset `formData` in our `handleSubmit()` function. This is an important step, as we don't navigate the user away from this page when a new comment is submitted.
@@ -75,38 +76,33 @@ Let's build out the scaffolding for our component.
 3. Next, import the component into the `HootDetails` component:
 
    ```jsx
-   // src/components/HootDetails/HootDetails.jsx
+   // src/pages/HootDetails.jsx
 
-   import CommentForm from '../CommentForm/CommentForm';
+   import CommentForm from "../components/CommentForm"
    ```
 
 4. Add the component to the comments section as shown below:
 
    ```jsx
-   // src/components/HootDetails/HootDetails.jsx
+   // src/pages/HootDetails.jsx
 
-         <section>
-           <h2>Comments</h2>
-           {/* Make use of the CommentForm component */}
-           <CommentForm />
-           
-           {!hoot.comments.length && <p>There are no comments.</p>}
-
-           {hoot.comments.map((comment) => (
-             <article key={comment._id}>
-               <header>
-                 <p>
-                   {`${comment.author.username} posted on
-                   ${new Date(comment.createdAt).toLocaleDateString()}`}
-                 </p>
-               </header>
-               <p>{comment.text}</p>
-             </article>
-           ))}
-         </section>
+    <section>
+      <h2>Comments</h2>
+      {/* COMMENT FORM GOES BELOW */}
+      <CommentForm />
+      {!hoot.comments.length && <p>There are no comments.</p>}
+      {hoot.comments.map((comment) => (
+      <article key={comment._id}>
+        <header>
+          <p>{`${comment.author.username} posted on ${new Date(comment.createdAt).toLocaleDateString()}`}</p>
+        </header>
+        <p>{comment.text}</p>
+      </article>
+      ))}
+    </section>
    ```
 
-5. In your browser, verify that typing in the `CommentForm` updates the `formData` state correctly.
+1. In your browser, verify that typing in the `CommentForm` updates the `formData` state correctly.
 
 ## Build the `handleAddComment()` function
 
@@ -115,63 +111,70 @@ Next, let's create a `handleAddComment()` function.
 1. Add the new `handleAddComment()` function to the `HootDetails`:
 
    ```jsx
-   // src/components/HootDetails/HootDetails.jsx
+   // src/pages/HootDetails.jsx
 
-     const handleAddComment = async (commentFormData) => {
-       console.log('commentFormData', commentFormData);
-     };
+    const handleAddComment = async (formData) => {
+        console.log('formData: ', formData)
+    }
    ```
 
 2. With the new function in place, pass it down to the `<CommentForm />`:
 
    ```jsx
-   // src/components/HootDetails/HootDetails.jsx
+   // src/pages/HootDetails.jsx
 
-         <section>
-           <h2>Comments</h2>
-           {/* Pass the handleAddComment function to the CommentForm Component */}
-           <CommentForm handleAddComment={handleAddComment}/>
-
-           {!hoot.comments.length && <p>There are no comments.</p>}
-
-           {hoot.comments.map((comment) => (
-             <article key={comment._id}>
-               <header>
-                 <p>
-                   {`${comment.author.username} posted on
-                   ${new Date(comment.createdAt).toLocaleDateString()}`}
-                 </p>
-               </header>
-               <p>{comment.text}</p>
-             </article>
-           ))}
-         </section>
+    <section>
+      <h2>Comments</h2>
+      {/* PASS handleAddComment */}
+      <CommentForm handleAddComment={handleAddComment} />
+      {!hoot.comments.length && <p>There are no comments.</p>}
+      {hoot.comments.map((comment) => (
+      <article key={comment._id}>
+        <header>
+          <p>{`${comment.author.username} posted on ${new Date(comment.createdAt).toLocaleDateString()}`}</p>
+        </header>
+        <p>{comment.text}</p>
+      </article>
+      ))}
+    </section>
    ```
 
 3. Return to the `CommentForm` component and update the `handleSubmit()` function by calling `props.handleAddComment(formData)`:
 
    ```jsx
-   // src/components/CommentForm/CommentForm.jsx
+   // src/components/CommentForm.jsx
 
-     const handleSubmit = (evt) => {
-       evt.preventDefault();
-       props.handleAddComment(formData);
-       setFormData({ text: '' });
-     };
+  const handleSubmit = (evt) => {
+    evt.preventDefault()
+    props.handleAddComment(formData)
+    setFormData(initialState)
+  }
    ```
 
-4. Confirm you are passing `formData` up to `src/components/HootDetails/HootDetails.jsx`. When you submit the comment form, you should see a `console.log()` originating from the `HootDetails` component.
+4. Confirm you are passing `formData` up to `src/pages/HootDetails.jsx`. When you submit the comment form, you should see a `console.log()` originating from the `HootDetails` component.
+
+### Let's create our `comments service` module!
+
+Run the following command in your terminal:
+
+```bash
+touch src/services/comments.js
+```
+
+And add the following to the top of `src/services/comments.js`:
+
+```javascript
+const BASE_URL = `${import.meta.env.VITE_BACK_END_SERVER_URL}/hoots`
+```
 
 ## Build the service function
 
-Time to build out the service function. Despite being another resource, our comment service functions will live inside `src/services/hootService.js`. This is because all of the endpoints for comments will share the same `BASE_URL` as hoots (`/hoots`). We'll append more specific endpoints to each comment service function as necessary.
-
-Add the following to `src/services/hootService.js`:
+Add the following to `src/services/comments.js`:
 
 ```javascript
-// src/services/hootService.js
+// src/services/comments.js
 
-const createComment = async (hootId, commentFormData) => {
+const create = async (hootId, commentFormData) => {
   try {
     const res = await fetch(`${BASE_URL}/${hootId}/comments`, {
       method: 'POST',
@@ -180,33 +183,35 @@ const createComment = async (hootId, commentFormData) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(commentFormData),
-    });
-    return res.json();
+    })
+    return res.json()
   } catch (error) {
-    console.log(error);
+    console.log(error)
   }
-};
+}
 
 export {
-  index,
-  show,
-  create,
-  // Don't forget to export:
-  createComment,
-};
+    create,
+}
 ```
 
 ## Call the service
 
-With the service in place, we can update the `handleAddComment` function in `src/components/HootDetails/HootDetails.jsx` to call the service and set state:
+With the service in place, we can update the `handleAddComment` function in `src/pages/HootDetails.jsx` to call the service and set state:
 
 ```jsx
-// src/components/HootDetails/HootDetails.jsx
+// src/App.jsx
 
-  const handleAddComment = async (commentFormData) => {
-    const newComment = await hootService.createComment(hootId, commentFormData);
-    setHoot({ ...hoot, comments: [...hoot.comments, newComment] });
-  };
+import * as commentsService from '../services/comments'
+```
+
+```jsx
+// src/pages/HootDetails.jsx
+
+    const handleAddComment = async (formData) => {
+        const newComment = await commentsService.create(hootId, formData)
+        setHoot({...hoot, comments:[...hoot.comments, newComment]})
+    }
 ```
 
 There is a lot going on in the last line of this function with `setHoot()`.

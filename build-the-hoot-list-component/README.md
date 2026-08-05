@@ -163,7 +163,7 @@ To display the list of hoots, we need to fetch the data from our back-end. Here'
 
    - Utilizing the [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch), we'll create an asynchronous `index()` service function that retrieves a list of hoots from our back-end app.
 
-### Let's create our `hootService` module!
+### Let's create our `hoots service` module!
 
 Run the following command in your terminal:
 
