@@ -27,50 +27,74 @@ In this lesson, we will focus on restricting access in the **front-end** app.
 
 Based on our user story, we'll need to **conditionally render the delete button based on the author of the hoot**. We can accomplish this using the `UserContext`. This makes the signed-in `user` object easily accessible throughout our component tree. We'll make use of this `user` object when we render the delete button in the `HootDetails` component.
 
-## Build the UI
+# Build the UI
 
-1. At the top of the `HootDetails` component, add imports for import `UserContext` and `useContext`:
+Because the `user` state is defined in `App.jsx`, we need to pass it to the `HootDetails` component as a prop.
+
+1. In `App.jsx`, find the route that renders `HootDetails` and pass the `user` state to it:
 
    ```jsx
-   // src/components/HootDetails/HootDetails.jsx
+   // src/App.jsx
 
-   // Add useContext to the existing import statement for react
-   import { useState, useEffect, useContext } from 'react';
-   import { useParams } from 'react-router';
-
-   import CommentForm from '../CommentForm/CommentForm';
-
-   import * as hootService from '../../services/hootService';
-
-   // Import the UserContext
-   import { UserContext } from '../../contexts/UserContext';
+   <Route
+     path="/hoots/:hootId"
+     element={<HootDetails user={user} />}
+   />
    ```
 
-2. Within the component function, create the following `user` constant:
+   The `HootDetails` component can now access the signed-in user through its props.
+
+2. Update the `HootDetails` component to accept `props`:
 
    ```jsx
-   // src/components/HootDetails/HootDetails.jsx
+   // src/pages/HootDetails/HootDetails.jsx
 
-   const HootDetails = () => {
-     const { hootId } = useParams();
-     // Access the user object from the UserContext
-     const { user } = useContext(UserContext);
-     const [hoot, setHoot] = useState(null);
+   import { useState, useEffect } from 'react'
+   import { useParams } from 'react-router'
+
+   import CommentForm from '../CommentForm/CommentForm'
+
+   import * as hootService from '../../services/hootService'
+
+   const HootDetails = (props) => {
+     const { hootId } = useParams()
+     const [hoot, setHoot] = useState(null)
 
      // useEffect, handleAddComment, and return statements here
-   };
+   }
+
+   export default HootDetails
    ```
 
-   Time to add some conditional rendering for our button.
+   We do not need to import `UserContext` or `useContext`. The user is available as `props.user`.
 
-   For our conditional rendering, we'll use the [Logical AND ( && )](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Logical_AND) operator.
+## Conditionally render the author controls
 
-   If the `hoot.author._id` matches `user._id`, this piece of UI should be visible. If not, the UI should not be rendered. This means only the author of this particular `hoot` can access the UI to update or delete a `hoot`.
+Next, add conditional rendering for the edit and delete controls.
+
+For our conditional rendering, we'll use the [Logical AND (`&&`)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Logical_AND) operator.
+
+```jsx
+{props.user && hoot.author._id === props.user._id && (
+  <div>
+    {/* Edit and delete controls */}
+  </div>
+)}
+```
+
+This condition checks two things:
+
+1. A user is currently signed in.
+2. The signed-in user's `_id` matches the hoot author's `_id`.
+
+When both conditions are true, the edit and delete controls will be displayed. Otherwise, this part of the UI will not be rendered.
+
+This means only the author of a particular hoot will see the controls used to update or delete it.
 
 3. Modify the contents of the `<header>` in the main return for the `HootDetails` component to conditionally render the delete button:
 
    ```jsx
-   // src/components/HootDetails/HootDetails.jsx
+   // src/pages/HootDetails.jsx
 
              <header>
                <p>{hoot.category.toUpperCase()}</p>
@@ -116,7 +140,7 @@ Based on our user story, we'll need to **conditionally render the delete button 
 3. The `HootDetails` component will need to receive the `handleDeleteHoot()` function as a prop. It currently doesn't have any props, so let's add the `props` parameter to the component function:
 
    ```jsx
-   // src/components/HootDetails/HootDetails.jsx
+   // src/pages/HootDetails.jsx
 
    // The HootDetails component function needs to receive props
    const HootDetails = (props) => {
@@ -129,7 +153,7 @@ Based on our user story, we'll need to **conditionally render the delete button 
    Update your button with the following:
 
    ```jsx
-   // src/components/HootDetails/HootDetails.jsx
+   // src/pages/HootDetails.jsx
 
            {hoot.author._id === user._id && (
              <>
