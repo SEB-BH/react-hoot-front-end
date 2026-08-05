@@ -102,7 +102,7 @@
         {
           "friendlyName": "Update and Delete Comments",
           "dirName": "update-and-delete-comments",
-          "type": "Content",
+          "type": "Level Up content",
           "skill": "",
           "learningObjective": "",
           "videoUrl": "",
@@ -112,7 +112,7 @@
         {
           "friendlyName": "Add CSS Modules",
           "dirName": "add-css-modules",
-          "type": "Content",
+          "type": "Level Up content",
           "skill": "",
           "learningObjective": "",
           "videoUrl": "",
@@ -122,7 +122,7 @@
         {
           "friendlyName": "Style the Hoot List Component",
           "dirName": "style-the-hoot-list-component",
-          "type": "Content",
+          "type": "Level Up content",
           "skill": "",
           "learningObjective": "",
           "videoUrl": "",
@@ -132,7 +132,7 @@
         {
           "friendlyName": "Style the Hoot Details Component",
           "dirName": "style-the-hoot-details-component",
-          "type": "Content",
+          "type": "Level Up content",
           "skill": "",
           "learningObjective": "",
           "videoUrl": "",
@@ -142,7 +142,7 @@
         {
           "friendlyName": "Style the Form Components",
           "dirName": "style-the-form-components",
-          "type": "Content",
+          "type": "Level Up content",
           "skill": "",
           "learningObjective": "",
           "videoUrl": "",
@@ -152,7 +152,7 @@
         {
           "friendlyName": "Style the Sign-Up and Sign-In Pages",
           "dirName": "style-the-sign-up-and-sign-in-pages",
-          "type": "Content",
+          "type": "Level Up content",
           "skill": "",
           "learningObjective": "",
           "videoUrl": "",
@@ -162,7 +162,7 @@
         {
           "friendlyName": "Build a Loading Screen",
           "dirName": "build-a-loading-screen",
-          "type": "Content",
+          "type": "Level Up content",
           "skill": "",
           "learningObjective": "",
           "videoUrl": "",
@@ -172,7 +172,7 @@
         {
           "friendlyName": "Build a Landing Page",
           "dirName": "build-a-landing-page",
-          "type": "Content",
+          "type": "Level Up content",
           "skill": "",
           "learningObjective": "",
           "videoUrl": "",
@@ -182,7 +182,7 @@
         {
           "friendlyName": "Build a Reusable Icon Component",
           "dirName": "build-a-reusable-icon-component",
-          "type": "Content",
+          "type": "Level Up content",
           "skill": "",
           "learningObjective": "",
           "videoUrl": "",
@@ -192,7 +192,7 @@
         {
           "friendlyName": "Build a Reusable Metadata Component",
           "dirName": "build-a-reusable-metadata-component",
-          "type": "Content",
+          "type": "Level Up content",
           "skill": "",
           "learningObjective": "",
           "videoUrl": "",
