@@ -69,11 +69,12 @@ We'll make a `POST` request to our back-end server to create a hoot. When a requ
 import { useState } from 'react'
 
 const HootForm = (props) => {
-  const [formData, setFormData] = useState({
-    title: '',
-    text: '',
-    category: 'News',
-  })
+  const initialState = {
+        title: '',
+        text: '',
+        category: 'News',
+    }
+  const [formData, setFormData] = useState(initialState)
 
   const handleChange = (evt) => {
     setFormData({ ...formData, [evt.target.name]: evt.target.value })
