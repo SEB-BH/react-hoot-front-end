@@ -23,6 +23,10 @@ Students will also learn to apply CSS Modules for styling and building reusable 
 | [Create a Comment](./create-a-comment/README.md)                                         | Building a component to create comments.                                    |
 | [Delete a Hoot](./delete-a-hoot/README.md)                                               | Building the functionality to delete a hoot.                                |
 | [Update a Hoot](./update-a-hoot/README.md)                                               | Building the functionality to update a hoot.                                |
+
+
+| Level Up                                                                                   | Skills                                                                      |
+| ---------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
 | [Update and Delete Comments](./update-and-delete-comments/README.md)                     | Building the functionality to update and delete comments.                   |
 | [Add CSS Modules](./add-css-modules/README.md)                                           | Applying CSS Modules to style an application.                               |
 | [Style the `HootList` Component](./style-the-hoot-list-component/README.md)              | Applying CSS Modules to a list component.                                   |
