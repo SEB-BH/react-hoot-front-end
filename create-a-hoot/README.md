@@ -20,27 +20,27 @@ We'll make a `POST` request to our back-end server to create a hoot. When a requ
 1. First, let's add a new link to the `NavBar` component. It should direct users to `/hoots/new`.
 
    ```jsx
-   // src/components/NavBar/NavBar.jsx
+   // src/components/Nav.jsx
 
-     return (
-       <nav>
-         {user ? (
-           <ul>
-             <li><Link to='/'>HOME</Link></li>
-             <li><Link to='/hoots'>HOOTS</Link></li>
-             {/* Add the NEW HOOT link */}
-             <li><Link to='/hoots/new'>NEW HOOT</Link></li>
-             <li><Link to='/' onClick={handleSignOut}>Sign Out</Link></li>
-           </ul>
-         ) : (
-           <ul>
-             <li><Link to='/'>HOME</Link></li>
-             <li><Link to='/sign-in'>SIGN IN</Link></li>
-             <li><Link to='/sign-up'>SIGN UP</Link></li>
-           </ul>
-         )}
-       </nav>
-     );
+    return (
+        <nav>
+            <Link className="nav-brand" to="/">Hoot</Link>
+            { props.user ? (
+                <ul>
+                    <li>Welcome, {props.user.username}!</li>
+                    <li><Link to='/hoots'>HOOTS</Link></li>
+                    <li><Link to='/hoots/new'>NEW HOOT</Link></li>
+                    <li><Link to="/" onClick={handleSignOut}>Sign Out</Link></li>
+                </ul>
+            ) : (
+            <ul>
+                <li><Link to='/'>Home</Link></li>
+                <li><Link to='/sign-up'>Sign Up</Link></li>
+                <li><Link to='/sign-in'>Sign In</Link></li>
+            </ul>
+            ) }
+        </nav>
+    )
    ```
 
 2. Next, add a corresponding route to `App.jsx`. We don't have a component to render yet, but that's ok.
@@ -58,77 +58,77 @@ We'll make a `POST` request to our back-end server to create a hoot. When a requ
    Run the following commands in your terminal:
 
    ```bash
-   mkdir src/components/HootForm
-   touch src/components/HootForm/HootForm.jsx
+   touch src/pages/HootForm.jsx
    ```
 
-   Add the following to `src/components/HootForm/HootForm.jsx`:
+   Add the following to `src/pages/HootForm.jsx`:
 
-   ```jsx
-   // src/components/HootForm/HootForm.jsx
+```jsx
+// src/pages/HootForm.jsx
 
-   import { useState } from 'react';
+import { useState } from 'react'
 
-   const HootForm = (props) => {
-     const [formData, setFormData] = useState({
-       title: '',
-       text: '',
-       category: 'News',
-     });
+const HootForm = (props) => {
+  const [formData, setFormData] = useState({
+    title: '',
+    text: '',
+    category: 'News',
+  })
 
-     const handleChange = (evt) => {
-       setFormData({ ...formData, [evt.target.name]: evt.target.value });
-     };
+  const handleChange = (evt) => {
+    setFormData({ ...formData, [evt.target.name]: evt.target.value })
+  }
 
-     const handleSubmit = (evt) => {
-       evt.preventDefault();
-       console.log('formData', formData);
-       // We'll update this function shortly...
-     };
+  const handleSubmit = (evt) => {
+    evt.preventDefault()
+    console.log('formData', formData)
+    // We'll update this function shortly...
+  }
 
-     return (
-       <main>
-         <form onSubmit={handleSubmit}>
-           <label htmlFor='title-input'>Title</label>
-           <input
-             required
-             type='text'
-             name='title'
-             id='title-input'
-             value={formData.title}
-             onChange={handleChange}
-           />
-           <label htmlFor='text-input'>Text</label>
-           <textarea
-             required
-             type='text'
-             name='text'
-             id='text-input'
-             value={formData.text}
-             onChange={handleChange}
-           />
-           <label htmlFor='category-input'>Category</label>
-           <select
-             required
-             name='category'
-             id='category-input'
-             value={formData.category}
-             onChange={handleChange}
-           >
-             <option value='News'>News</option>
-             <option value='Games'>Games</option>
-             <option value='Music'>Music</option>
-             <option value='Movies'>Movies</option>
-             <option value='Sports'>Sports</option>
-             <option value='Television'>Television</option>
-           </select>
-           <button type='submit'>SUBMIT</button>
-         </form>
-       </main>
-     );
-   };
+  return (
+    <main className='card'>
+      <form onSubmit={handleSubmit}>
+        <label htmlFor='title-input'>Title</label>
+        <input
+          required
+          type='text'
+          name='title'
+          id='title-input'
+          value={formData.title}
+          onChange={handleChange}
+        />
+        <label htmlFor='text-input'>Text</label>
+        <textarea
+          required
+          type='text'
+          name='text'
+          id='text-input'
+          value={formData.text}
+          onChange={handleChange}
+        />
+        <label htmlFor='category-input'>Category</label>
+        <select
+          required
+          name='category'
+          id='category-input'
+          value={formData.category}
+          onChange={handleChange}
+        >
+          <option value='News'>News</option>
+          <option value='Sports'>Sports</option>
+          <option value='Games'>Games</option>
+          <option value='Movies'>Movies</option>
+          <option value='Music'>Music</option>
+          <option value='Television'>Television</option>
+          <option value='Other'>Other</option>
+        </select>
+        <button type='submit'>SUBMIT</button>
+      </form>
+    </main>
+  )
+}
 
-   export default HootForm;
+export default HootForm
    ```
 
    This component is similar to other forms you've seen in React, but let's take a closer look at the `<select>` tag:
@@ -139,12 +139,27 @@ We'll make a `POST` request to our back-end server to create a hoot. When a requ
 
    > ❓ Notice our `handleSubmit` function. Why do we need [e.preventDefault()](https://developer.mozilla.org/en-US/docs/Web/API/Event/preventDefault) when we submit a `<form>` in React? What default behavior are we preventing [here](https://react.dev/learn/responding-to-events#preventing-default-behavior)?
 
+   If you're using the Auth Template css, add `textarea` and `select` to the `form input` rules in `App.css`:
+
+   ```css
+   form input, textarea, select {
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid var(--color-primary);
+  }
+
+    form input:focus, textarea:focus, select:focus {
+    border-color: var(--color-primary);
+    outline: 2px solid var(--color-primary-soft);
+  }
+  ```
+
 4. Let's import the new `HootForm` component into the `App` component:
 
    ```jsx
    // src/App.jsx
 
-   import HootForm from './components/HootForm/HootForm';
+   import HootForm from './pages/HootForm';
    ```
 
 5. Update your route in `App.jsx` to render the new `HootForm` component.
@@ -182,10 +197,10 @@ Add the following function:
 ```jsx
 // src/App.jsx
 
-const handleAddHoot = async (hootFormData) => {
-  console.log('hootFormData', hootFormData);
-  navigate('/hoots');
-};
+  const handleAddHoot = async (formData) => {
+    console.log('formData: ', formData)
+    navigate('/hoots')
+  }
 ```
 
 At this point, we'll just confirm that the `hootFormData` is passed to the function and that `useNavigate()` is functioning correctly.
@@ -204,12 +219,12 @@ With the function in place, update your route by passing the new handler functio
 Now that we are passing down `handleAddHoot()` as props, we can finish building out the `handleSubmit()` function in `HootForm.jsx`:
 
 ```jsx
-// src/components/HootForm/HootForm.jsx
+// src/pages/HootForm.jsx
 
   const handleSubmit = (evt) => {
-    evt.preventDefault();
-    props.handleAddHoot(formData);
-  };
+    evt.preventDefault()
+    props.handleAddHoot(formData)
+  }
 ```
 
 > 🚨 Be sure to pass in `formData` state when calling `handleAddHoot()`.
@@ -229,7 +244,7 @@ Now, let's create the `create()` service function, which uses a `POST` request. 
 Let's add the service:
 
 ```javascript
-// src/services/hootService.js
+// src/services/hoots.js
 
 const create = async (hootFormData) => {
   try {
@@ -240,18 +255,18 @@ const create = async (hootFormData) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(hootFormData),
-    });
-    return res.json();
+    })
+    return res.json()
   } catch (error) {
-    console.log(error);
+    console.log(error)
   }
-};
+}
 
-export {
+export { 
   index,
   show,
-  create
-};
+  create,
+}
 ```
 
 ## Call the service
@@ -261,11 +276,11 @@ Back in `src/App.jsx`, update `handleAddHoot()` with the service function:
 ```jsx
 // src/App.jsx
 
-  const handleAddHoot = async (hootFormData) => {
-    const newHoot = await hootService.create(hootFormData);
-    setHoots([newHoot, ...hoots]);
-    navigate('/hoots');
-  };
+  const handleAddHoot = async (formData) => {
+    const newHoot = await hootService.create(formData)
+    setHoots([newHoot, ...hoots])
+    navigate('/hoots')
+  }
 ```
 
 > Notice how when we `setHoots()`, the `newHoot` is added to the **front of the array**, ensuring it appears at the top of the page. This matches the behavior of our `index()` function, which retrieves `hoots` in descending order (newest first). Adding `newHoot` to the end would disrupt this order when the page refreshes, as the `index()` service re-fetches the data.
