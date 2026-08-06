@@ -28,13 +28,7 @@ Students will also learn to apply CSS Modules for styling and building reusable 
 | Level Up                                                                                   | Skills                                                                      |
 | ---------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
 | [Update and Delete Comments](./update-and-delete-comments/README.md)                     | Building the functionality to update and delete comments.                   |
-| [Add CSS Modules](./add-css-modules/README.md)                                           | Applying CSS Modules to style an application.                               |
-| [Style the `HootList` Component](./style-the-hoot-list-component/README.md)              | Applying CSS Modules to a list component.                                   |
-| [Style the `HootDetails` Component](./style-the-hoot-details-component/README.md)        | Applying CSS Modules to a details component.                                |
-| [Style the Form Components](./style-the-form-components/README.md)                       | Applying CSS Modules to a form component.                                   |
-| [Style the Sign-Up and Sign-In Pages](./style-the-sign-up-and-sign-in-pages/README.md)   | Applying styles to the sign-up and sign-in pages.                           |
 | [Build a Loading Screen](./build-a-loading-screen/README.md)                             | Building a reusable loading component.                                      |
-| [Build a Landing Page](./build-a-landing-page/README.md)                                 | Building a landing page component.                                          |
 | [Build a Reusable `Icon` Component](./build-a-reusable-icon-component/README.md)         | Building a reusable icon component.                                         |
 | [Build a Reusable `Metadata` Component](./build-a-reusable-metadata-component/README.md) | Building a reusable metadata component.                                     |
 
@@ -44,3 +38,12 @@ Students will also learn to apply CSS Modules for styling and building reusable 
 
 
 **Find a 👾 bug 👾 or have suggestions? [Let us know](https://ga-curriculum.github.io/universal-resources-internal/module-feedback.html)!**
+
+
+<!-- 
+| [Build a Landing Page](./build-a-landing-page/README.md)                                 | Building a landing page component.                                          |
+| [Add CSS Modules](./add-css-modules/README.md)                                           | Applying CSS Modules to style an application.                               |
+| [Style the `HootList` Component](./style-the-hoot-list-component/README.md)              | Applying CSS Modules to a list component.                                   |
+| [Style the `HootDetails` Component](./style-the-hoot-details-component/README.md)        | Applying CSS Modules to a details component.                                |
+| [Style the Form Components](./style-the-form-components/README.md)                       | Applying CSS Modules to a form component.                                   |
+| [Style the Sign-Up and Sign-In Pages](./style-the-sign-up-and-sign-in-pages/README.md)   | Applying styles to the sign-up and sign-in pages.                           | -->

@@ -110,68 +110,8 @@
           "estimatedDeliveryTimeInMinutes": 0
         },
         {
-          "friendlyName": "Add CSS Modules",
-          "dirName": "add-css-modules",
-          "type": "Level Up content",
-          "skill": "",
-          "learningObjective": "",
-          "videoUrl": "",
-          "videoLengthInMinutes": 0,
-          "estimatedDeliveryTimeInMinutes": 0
-        },
-        {
-          "friendlyName": "Style the Hoot List Component",
-          "dirName": "style-the-hoot-list-component",
-          "type": "Level Up content",
-          "skill": "",
-          "learningObjective": "",
-          "videoUrl": "",
-          "videoLengthInMinutes": 0,
-          "estimatedDeliveryTimeInMinutes": 0
-        },
-        {
-          "friendlyName": "Style the Hoot Details Component",
-          "dirName": "style-the-hoot-details-component",
-          "type": "Level Up content",
-          "skill": "",
-          "learningObjective": "",
-          "videoUrl": "",
-          "videoLengthInMinutes": 0,
-          "estimatedDeliveryTimeInMinutes": 0
-        },
-        {
-          "friendlyName": "Style the Form Components",
-          "dirName": "style-the-form-components",
-          "type": "Level Up content",
-          "skill": "",
-          "learningObjective": "",
-          "videoUrl": "",
-          "videoLengthInMinutes": 0,
-          "estimatedDeliveryTimeInMinutes": 0
-        },
-        {
-          "friendlyName": "Style the Sign-Up and Sign-In Pages",
-          "dirName": "style-the-sign-up-and-sign-in-pages",
-          "type": "Level Up content",
-          "skill": "",
-          "learningObjective": "",
-          "videoUrl": "",
-          "videoLengthInMinutes": 0,
-          "estimatedDeliveryTimeInMinutes": 0
-        },
-        {
           "friendlyName": "Build a Loading Screen",
           "dirName": "build-a-loading-screen",
-          "type": "Level Up content",
-          "skill": "",
-          "learningObjective": "",
-          "videoUrl": "",
-          "videoLengthInMinutes": 0,
-          "estimatedDeliveryTimeInMinutes": 0
-        },
-        {
-          "friendlyName": "Build a Landing Page",
-          "dirName": "build-a-landing-page",
           "type": "Level Up content",
           "skill": "",
           "learningObjective": "",
@@ -319,68 +259,8 @@
           "estimatedDeliveryTimeInMinutes": 0
         },
         {
-          "friendlyName": "Add CSS Modules",
-          "dirName": "add-css-modules",
-          "type": "Level Up content",
-          "skill": "",
-          "learningObjective": "",
-          "videoUrl": "",
-          "videoLengthInMinutes": 0,
-          "estimatedDeliveryTimeInMinutes": 0
-        },
-        {
-          "friendlyName": "Style the Hoot List Component",
-          "dirName": "style-the-hoot-list-component",
-          "type": "Level Up content",
-          "skill": "",
-          "learningObjective": "",
-          "videoUrl": "",
-          "videoLengthInMinutes": 0,
-          "estimatedDeliveryTimeInMinutes": 0
-        },
-        {
-          "friendlyName": "Style the Hoot Details Component",
-          "dirName": "style-the-hoot-details-component",
-          "type": "Level Up content",
-          "skill": "",
-          "learningObjective": "",
-          "videoUrl": "",
-          "videoLengthInMinutes": 0,
-          "estimatedDeliveryTimeInMinutes": 0
-        },
-        {
-          "friendlyName": "Style the Form Components",
-          "dirName": "style-the-form-components",
-          "type": "Level Up content",
-          "skill": "",
-          "learningObjective": "",
-          "videoUrl": "",
-          "videoLengthInMinutes": 0,
-          "estimatedDeliveryTimeInMinutes": 0
-        },
-        {
-          "friendlyName": "Style the Sign-Up and Sign-In Pages",
-          "dirName": "style-the-sign-up-and-sign-in-pages",
-          "type": "Level Up content",
-          "skill": "",
-          "learningObjective": "",
-          "videoUrl": "",
-          "videoLengthInMinutes": 0,
-          "estimatedDeliveryTimeInMinutes": 0
-        },
-        {
           "friendlyName": "Build a Loading Screen",
           "dirName": "build-a-loading-screen",
-          "type": "Level Up content",
-          "skill": "",
-          "learningObjective": "",
-          "videoUrl": "",
-          "videoLengthInMinutes": 0,
-          "estimatedDeliveryTimeInMinutes": 0
-        },
-        {
-          "friendlyName": "Build a Landing Page",
-          "dirName": "build-a-landing-page",
           "type": "Level Up content",
           "skill": "",
           "learningObjective": "",
